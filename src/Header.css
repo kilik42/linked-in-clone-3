@@ -1,0 +1,19 @@
+.header{
+    display: flex;
+    justify-content: space-between;
+    padding: 18px 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background-color: white;
+    border-bottom: 1px solid whitesmoke;
+}
+.header__left{
+    display: flex;
+}
+
+.header__left > img{
+    object-fit: contain;
+    height: 40px;
+    margin-right: 10px;
+}
