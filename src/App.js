@@ -1,19 +1,26 @@
 import React from 'react';
 import './App.css';
 import Header from './Header';
+import Sidebar from './Sidebar';
 
 function App() {
   return (
-    <div className="App">
-      <h1>lets build a linked clone </h1>
+    <div className="app">
+      {/* <h1>lets build a linked clone </h1> */}
 
       {/* Header */}
       <Header/>
 
       {/* appbody */}
-        {/* sidebar */}
+      <div className="app__body">
+
+        <Sidebar />
+
+        
         {/* feed */}
         {/* widgets */}
+      </div>
+        
 
 
     </div>

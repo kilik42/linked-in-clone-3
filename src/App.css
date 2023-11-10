@@ -1,0 +1,12 @@
+.app{
+    display:flex;
+    flex-direction:column;
+    height:100vh;
+    background-color: #f3f2ef;
+    overflow:hidden;
+    align-items: center;
+}
+
+.app__body{
+    display:flex;
+}
