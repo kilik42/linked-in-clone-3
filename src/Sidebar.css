@@ -116,6 +116,13 @@
     background-color: #f5f5f5;
 }
 
+.sidebar__recentItem:hover{
+    background-color: #ebebeb;
+    border-radius: 10px;
+    cursor:pointer;
+    color: black;
+}
+
 .sidebar__hash{
     margin-right: 5px;
     margin-left: 5px;
