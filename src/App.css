@@ -4,9 +4,10 @@
     height:100vh;
     background-color: #f3f2ef;
     overflow:hidden;
-    align-items: center;
+    align-items: left;
 }
 
 .app__body{
     display:flex;
+    
 }

@@ -1,0 +1,48 @@
+.feed{
+    flex:0.6;
+    margin: 0 30px;
+    border-radius:10px;
+    border: 1px solid lightgray;
+    padding: 5px;
+    border: none;
+
+}
+
+.feed_inputContainer{
+    background-color: white;
+    border-radius: 10px;
+    padding:10px;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+
+
+}
+
+.feed__input{
+    border: 1px solid lightgray;
+    /* width: 100%; */
+    /* outline: none; */
+    font-size: 16px;
+    padding: 10px;
+    padding-left: 15px;
+    border-radius: 20px;
+    /* background-color: #eff2f5; */
+}
+
+.feed__input > form{
+    display: flex;
+    width: 100%;
+    /* align-items: center; */
+}
+
+.feed__input > form > input{
+    flex: 1;
+    border-radius: 30px;
+    padding: 10px;
+    border: none;
+    outline: none;
+    margin-left: 10px;
+    margin-right: 10px;
+    outline-width: 0;
+    font-weight: 600;
+}
