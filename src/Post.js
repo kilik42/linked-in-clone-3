@@ -1,12 +1,25 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './Post.css'
 import { Avatar, Input } from '@mui/material'
-import { ThumbUpAltOutlinedIcon } from '@mui/icons-material'
+import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 import InputOption from './InputOption'
 import ChatOutlinedIcon from '@mui/icons-material/ChatOutlined';
 import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined';
 import SendOutlinedIcon from '@mui/icons-material/SendOutlined';
 function Post({name, description, message, photoUrl}) {
+  
+  
+
+  // const sendPost = e => {
+  //   e.preventDefault();
+  //   db.collection('posts').add({
+  //     name: name,
+  //     description: description,
+  //     message: message,
+  //     photoUrl: photoUrl,
+  //     timestamp: firebase.firestore.FieldValue.serverTimestamp()
+  //   })
+  // }
   return (
     <div className='post'>
         <div className="post__header">
@@ -23,7 +36,7 @@ function Post({name, description, message, photoUrl}) {
         </div>
 
       <div className="post__buttons">
-        <InputOption Icon = {ThumbUpAltOutlinedIcon}
+        <InputOption Icon = {ThumbUpAltIcon}
         title="Like" color= "gray"
         />
         <InputOption Icon = {ChatOutlinedIcon} title="Comment" color= "gray"/>
