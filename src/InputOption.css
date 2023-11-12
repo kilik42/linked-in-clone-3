@@ -1,0 +1,27 @@
+.inputOption{
+    display: flex;
+    align-items: center;
+    padding: 0 1rem;
+    margin-top: 25px;
+    cursor: pointer;
+    color: gray;
+    border-radius: 999px;
+    /* margin: 0 0.5rem; */
+    transition: all 0.2s ease-in-out;
+    &:hover{
+        background-color: whitesmoke;
+        color: black;
+    }
+    .inputOption__icon{
+        padding: 0.5rem;
+        font-size: 1.5rem;
+    }
+    .inputOption__title{
+        font-size: 1.2rem;
+        font-weight: 600;
+    }
+}
+
+.inputOption > h4{
+    margin-left: 5px;
+}
