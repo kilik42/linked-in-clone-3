@@ -10,16 +10,7 @@ function Post({name, description, message, photoUrl}) {
   
   
 
-  // const sendPost = e => {
-  //   e.preventDefault();
-  //   db.collection('posts').add({
-  //     name: name,
-  //     description: description,
-  //     message: message,
-  //     photoUrl: photoUrl,
-  //     timestamp: firebase.firestore.FieldValue.serverTimestamp()
-  //   })
-  // }
+
   return (
     <div className='post'>
         <div className="post__header">

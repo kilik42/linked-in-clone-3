@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './Feed.css'
 import CreateIcon from '@mui/icons-material/Create';
 import InputOption from './InputOption';
@@ -7,8 +7,39 @@ import SubscriptionsIcon from '@mui/icons-material/Subscriptions';
 import EventNoteIcon from '@mui/icons-material/EventNote';
 import CalendarViewDayIcon from '@mui/icons-material/CalendarViewDay';
 import Post from './Post';
+import { db } from './firebase';
+import firebase from 'firebase';
+
 function Feed() {
   const [posts, setPosts] = useState([]);
+  // const [input, setInput] = useState('');
+  const [name, setName] = useState('');
+  const [description, setDescription] = useState('');
+  const [message, setMessage] = useState('');
+  const [photoUrl, setPhotoUrl] = useState('');
+
+  useEffect(() => {
+    db.collection('posts').onSnapshot(snapshot => (
+      setPosts(snapshot.docs.map(doc => (
+        {
+          id: doc.id,
+          data: doc.data()
+        }
+      )))
+    ))
+  }, []);
+  
+  const sendPost = e => {
+    e.preventDefault();
+    db.collection('posts').add({
+      name: name,
+      description: description,
+      message: message,
+      photoUrl: photoUrl,
+      timestamp: firebase.firestore.FieldValue.serverTimestamp()
+    })
+  }
+
   return (
     <div className='feed'>
       <div className="feed__inputContainer">
@@ -17,8 +48,14 @@ function Feed() {
             <form >
            
                 
-                <input type="text"/>
-                <button type="submit">Send</button>
+                <input 
+                value={message}
+                onChange = {e => setMessage(e.target.value)}
+                type="text"/>
+                <button
+                onClick={sendPost}
+                
+                type="submit">Send</button>
             </form>
         </div>
 
@@ -31,9 +68,13 @@ function Feed() {
       </div>
 
       {/* posts */}
+
+      {posts.map((post) => (
+        <Post/>
+      ))}
+
       <Post name='paul muhaddib' description='This is a test' message='Wow this worked' />
-        <Post name='darryl dannn' description='This is a test' message='Wow this worked' />
-        <Post name='mary dddkk' description='This is a test' message='Wow this worked' />
+        
     </div>
   )
 }
