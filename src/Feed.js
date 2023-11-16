@@ -8,8 +8,12 @@ import EventNoteIcon from '@mui/icons-material/EventNote';
 import CalendarViewDayIcon from '@mui/icons-material/CalendarViewDay';
 import Post from './Post';
 import { db } from './firebase';
-import firebase from 'firebase';
-
+import { collection, getDocs } from 'firebase/firestore';
+// import firebase from 'firebase';
+import firebase from 'firebase/compat/app';
+// import firebase from 'firebase/compat/app';
+import 'firebase/compat/auth'
+import { onSnapshot } from "firebase/firestore";
 function Feed() {
   const [posts, setPosts] = useState([]);
   // const [input, setInput] = useState('');
@@ -19,14 +23,15 @@ function Feed() {
   const [photoUrl, setPhotoUrl] = useState('');
 
   useEffect(() => {
-    db.collection('posts').onSnapshot(snapshot => (
-      setPosts(snapshot.docs.map(doc => (
-        {
+    const unsubscribe = onSnapshot(collection(db, 'posts'), (snapshot) => {
+      const postsData = snapshot.docs.map(doc => ({
           id: doc.id,
-          data: doc.data()
-        }
-      )))
-    ))
+          data: doc.data(),
+      }));
+      setPosts(postsData);
+  });
+
+  return () => unsubscribe();
   }, []);
   
   const sendPost = e => {
@@ -37,7 +42,8 @@ function Feed() {
       message: message,
       photoUrl: photoUrl,
       timestamp: firebase.firestore.FieldValue.serverTimestamp()
-    })
+    });
+    setMessage('');
   }
 
   return (
@@ -69,10 +75,15 @@ function Feed() {
 
       {/* posts */}
 
-      {posts.map((post) => (
-        <Post/>
-      ))}
-
+      {posts.map(({id, data:{name, description, message, photoUrl}}) => {
+        <Post
+        key={id}
+        name={name}
+        description={description}
+        message={message}
+        photoUrl={photoUrl}
+        />
+      }) }
       <Post name='paul muhaddib' description='This is a test' message='Wow this worked' />
         
     </div>
