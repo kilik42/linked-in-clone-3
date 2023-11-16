@@ -9,6 +9,8 @@ import CalendarViewDayIcon from '@mui/icons-material/CalendarViewDay';
 import Post from './Post';
 import { db } from './firebase';
 import { collection, getDocs } from 'firebase/firestore';
+import { doc, setDoc, addDoc } from "firebase/firestore";
+import { updateDoc, serverTimestamp } from "firebase/firestore";
 // import firebase from 'firebase';
 import firebase from 'firebase/compat/app';
 // import firebase from 'firebase/compat/app';
@@ -22,28 +24,56 @@ function Feed() {
   const [message, setMessage] = useState('');
   const [photoUrl, setPhotoUrl] = useState('');
 
-  useEffect(() => {
-    const unsubscribe = onSnapshot(collection(db, 'posts'), (snapshot) => {
-      const postsData = snapshot.docs.map(doc => ({
-          id: doc.id,
-          data: doc.data(),
-      }));
-      setPosts(postsData);
-  });
+  // refactoring for new firebase v. 10
+  const userPosts = collection(db, 'posts');
 
-  return () => unsubscribe();
+  useEffect(() => {
+  //   const unsubscribe = onSnapshot(collection(db, 'posts'), (snapshot) => {
+  //     const postsData = snapshot.docs.map(doc => ({
+  //         id: doc.id,
+  //         data: doc.data(),
+  //     }));
+  //     setPosts(postsData);
+  // });
+  const getUserPosts = async () => {
+  try{
+    const querySnapshot = await getDocs(userPosts);
+    const postsData = querySnapshot.docs.map(doc => ({
+      id: doc.id,
+      data: doc.data(),
+  }));
+  setPosts(postsData);
+  console.log(posts);
+} catch (e) {
+  console.error("Error fetching posts: ", e);
+}
+ 
+  };
+
+   getUserPosts();
   }, []);
   
   const sendPost = e => {
     e.preventDefault();
-    db.collection('posts').add({
+    
+    // refactoring for new firebase v. 10
+    const docRef = addDoc(collection(db, 'posts'), {
       name: name,
       description: description,
       message: message,
       photoUrl: photoUrl,
-      timestamp: firebase.firestore.FieldValue.serverTimestamp()
+      timestamp: serverTimestamp()
     });
-    setMessage('');
+    setMessage("");
+    // const docRef = await setDoc(doc(db, "posts", "post"), {
+    // const docRef =  await addDoc(collection(db, 'posts'), {
+    //   name: name,
+    //   description: description,
+    //   message: message,
+    //   photoUrl: photoUrl,
+    //   timestamp: serverTimestamp()
+    // });
+    // setMessage("");
   }
 
   return (
@@ -75,7 +105,7 @@ function Feed() {
 
       {/* posts */}
 
-      {posts.map(({id, data:{name, description, message, photoUrl}}) => {
+      {/* {posts.map(({id, data:{name, description, message, photoUrl}}) => {
         <Post
         key={id}
         name={name}
@@ -83,7 +113,17 @@ function Feed() {
         message={message}
         photoUrl={photoUrl}
         />
-      }) }
+      }) } */}
+      {/* posts */}
+    {posts.map(({ id, data: { name, description, message, photoUrl } }) => (
+      <Post
+        key={id}
+        name={name}
+        description={description}
+        message={message}
+        photoUrl={photoUrl}
+      />
+    ))}
       <Post name='paul muhaddib' description='This is a test' message='Wow this worked' />
         
     </div>
