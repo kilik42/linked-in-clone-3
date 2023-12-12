@@ -53,11 +53,13 @@ function Feed() {
    getUserPosts();
   }, []);
   
-  const sendPost = e => {
+  const sendPost = async e => {
     e.preventDefault();
     
     // refactoring for new firebase v. 10
-    const docRef = addDoc(collection(db, 'posts'), {
+    // Adding a new post to the 'posts' collection
+  try {
+    await addDoc(collection(db, 'posts'), {
       name: name,
       description: description,
       message: message,
@@ -65,16 +67,11 @@ function Feed() {
       timestamp: serverTimestamp()
     });
     setMessage("");
-    // const docRef = await setDoc(doc(db, "posts", "post"), {
-    // const docRef =  await addDoc(collection(db, 'posts'), {
-    //   name: name,
-    //   description: description,
-    //   message: message,
-    //   photoUrl: photoUrl,
-    //   timestamp: serverTimestamp()
-    // });
-    // setMessage("");
+  } catch (error) {
+    console.error("Error adding document: ", error);
   }
+  
+}
 
   return (
     <div className='feed'>
@@ -124,7 +121,7 @@ function Feed() {
         photoUrl={photoUrl}
       />
     ))}
-      <Post name='paul muhaddib' description='This is a test' message='Wow this worked' />
+      {/* <Post name='paul muhaddib' description='This is a test' message='Wow this worked' /> */}
         
     </div>
   )
