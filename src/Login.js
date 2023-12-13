@@ -6,7 +6,7 @@ function Login() {
   const [profilePic, setProfilePic] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const dispatch = useDispatch();
 
   const register = () => {
     console.log("register");
@@ -14,7 +14,22 @@ function Login() {
       return alert("please enter a full name");
     }
 
-  } 
+    auth.createUserWithEmailAndPassword(email, password).then((userAuth) => {
+      userAuth.user.updateProfile({
+        displayName: name,
+        photoURL: profilePic,
+      })
+      .then (() => {
+        dispatch(login({
+          email: userAuth.user.email,
+          uid: userAuth.user.uid,
+          displayName: name,
+          photoURL: profilePic,
+          
+        }))
+      })
+
+  }).catch(error => alert(error));
 
   const loginToApp = (e) => {
     console.log("login");
