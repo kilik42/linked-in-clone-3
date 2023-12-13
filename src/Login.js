@@ -13,6 +13,7 @@ function Login() {
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const auth = getAuth();
+  
   const loginToApp = (e) => {
     console.log("login");
     e.preventDefault();
